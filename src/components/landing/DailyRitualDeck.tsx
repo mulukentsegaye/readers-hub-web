@@ -39,7 +39,6 @@ interface RitualCardData {
   themeAccent: string;
   themeBg: string;
   themeBorder: string;
-  themeGlow: string;
   icon: React.ReactNode;
   quote: {
     text: string;
@@ -105,7 +104,6 @@ export const DailyRitualDeck: React.FC<DailyRitualDeckProps> = ({
       themeAccent: 'text-emerald-600 dark:text-emerald-400',
       themeBg: 'bg-emerald-500/10',
       themeBorder: 'border-emerald-500/20',
-      themeGlow: 'from-emerald-500/15 via-amber-500/5 to-transparent',
       icon: <Sun className="w-5 h-5 text-amber-500" />,
       quote: {
         text: 'The morning hour has gold in its mouth.',
@@ -127,7 +125,6 @@ export const DailyRitualDeck: React.FC<DailyRitualDeckProps> = ({
       themeAccent: 'text-sky-600 dark:text-sky-400',
       themeBg: 'bg-sky-500/10',
       themeBorder: 'border-sky-500/20',
-      themeGlow: 'from-sky-500/15 via-blue-500/5 to-transparent',
       icon: <CloudRain className="w-5 h-5 text-sky-500" />,
       quote: {
         text: 'A chapter in the afternoon is an antidote to the hurry of the world.',
@@ -149,7 +146,6 @@ export const DailyRitualDeck: React.FC<DailyRitualDeckProps> = ({
       themeAccent: 'text-amber-600 dark:text-amber-400',
       themeBg: 'bg-amber-500/10',
       themeBorder: 'border-amber-500/20',
-      themeGlow: 'from-amber-500/15 via-orange-500/5 to-transparent',
       icon: <Flame className="w-5 h-5 text-orange-500" />,
       quote: {
         text: 'Reading is that fruitful miracle of a communication in the midst of solitude.',
@@ -234,13 +230,6 @@ export const DailyRitualDeck: React.FC<DailyRitualDeckProps> = ({
       {/* Pinned Viewport Container */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center py-6 sm:py-10 px-4 sm:px-6 lg:px-12 overflow-hidden select-none">
         
-        {/* Ambient Mood Glow that subtly morphs based on time of day */}
-        <div 
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40 dark:opacity-25 transition-all duration-700 overflow-hidden"
-        >
-          <div className={`w-[720px] h-[480px] rounded-full bg-gradient-to-tr ${activeCard.themeGlow} blur-3xl transform -translate-y-10 transition-all duration-700`} />
-        </div>
 
         <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center relative z-10">
           

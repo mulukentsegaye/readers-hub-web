@@ -179,23 +179,19 @@ export function generateClassicCoverCanvas(title: string, author?: string, forma
   if (!ctx) return '';
 
   const palettes = [
-    ['#111827', '#1f2937', '#e5e7eb'], // Slate Noir
-    ['#14532d', '#052e16', '#86efac'], // Emerald Sage
-    ['#1e1b4b', '#0f172a', '#a5b4fc'], // Midnight Indigo
-    ['#450a0a', '#1c1917', '#fca5a5'], // Crimson Wine
-    ['#164e63', '#083344', '#67e8f9'], // Deep Cyan
-    ['#292524', '#1c1917', '#fde047'], // Antique Leather
+    ['#1c1917', '#e5e7eb'], // Warm Stone
+    ['#18181b', '#f4f4f5'], // Deep Zinc
+    ['#09090b', '#e4e4e7'], // Obsidian Cloth
+    ['#1e293b', '#e2e8f0'], // Archival Slate
+    ['#292524', '#fde047'], // Antique Leather
   ];
 
   let hash = 0;
   for (let i = 0; i < title.length; i++) hash = (hash << 5) - hash + title.charCodeAt(i);
   const selected = palettes[Math.abs(hash) % palettes.length];
 
-  // Base leather/cloth gradient
-  const grad = ctx.createLinearGradient(0, 0, 0, 450);
-  grad.addColorStop(0, selected[0]);
-  grad.addColorStop(1, selected[1]);
-  ctx.fillStyle = grad;
+  // Base solid archival cloth cover
+  ctx.fillStyle = selected[0];
   ctx.fillRect(0, 0, 300, 450);
 
   // Left spine shadow & highlight

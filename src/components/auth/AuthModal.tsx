@@ -449,7 +449,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   {/* Visual Profile Hero Banner Card */}
                   <div className="rounded-3xl border border-vibe-border bg-vibe-card shadow-soft overflow-hidden">
                     {/* Decorative Archival Header Pattern */}
-                    <div className="h-20 sm:h-24 w-full bg-gradient-to-r from-emerald-800/15 via-vibe-accent/20 to-amber-500/15 relative p-4 flex items-center justify-between border-b border-vibe-border/60">
+                    <div className="h-20 sm:h-24 w-full bg-vibe-card relative p-4 flex items-center justify-between border-b border-vibe-border">
                       <span className="text-[11px] font-mono uppercase tracking-widest text-vibe-ink-muted font-medium">
                         ✦ {user.rankTier} Member
                       </span>

@@ -803,7 +803,7 @@ export const ScrollTurnedBookExperience: React.FC<ScrollTurnedBookExperienceProp
                 className="absolute inset-0 p-8 flex flex-col justify-between border-y-2 border-r-2 border-emerald-950"
                 style={{
                   backfaceVisibility: 'hidden',
-                  background: 'radial-gradient(ellipse at 30% 20%, #064E3B 0%, #022C22 75%, #011C16 100%)',
+                  background: '#064E3B',
                   color: '#FBF9F4',
                 }}
               >
@@ -844,7 +844,7 @@ export const ScrollTurnedBookExperience: React.FC<ScrollTurnedBookExperienceProp
                   <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-amber-100 drop-shadow-md">
                     LIREAD
                   </h2>
-                  <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-300/60 to-transparent mx-auto" />
+                  <div className="w-16 h-0.5 bg-amber-300/40 mx-auto" />
                   <p className="font-display italic text-sm text-amber-200/90 tracking-wide font-normal">
                     Volume I · The Art of Deep Focus
                   </p>
@@ -875,7 +875,7 @@ export const ScrollTurnedBookExperience: React.FC<ScrollTurnedBookExperienceProp
                 style={{
                   transform: 'rotateY(180deg)',
                   backfaceVisibility: 'hidden',
-                  background: 'linear-gradient(135deg, #1C1917 0%, #0F172A 100%)',
+                  background: '#1C1917',
                   color: '#F8FAFC',
                 }}
               >

@@ -68,7 +68,7 @@ export const ReadingDeskAssembly: React.FC<ReadingDeskAssemblyProps> = ({ onOpen
   return (
     <div 
       ref={containerRef}
-      className="relative w-full rounded-3xl bg-gradient-to-b from-vibe-card to-vibe-card-subtle border border-vibe-border p-4 sm:p-8 shadow-xl overflow-hidden select-none"
+      className="relative w-full rounded-3xl bg-vibe-card border border-vibe-border p-4 sm:p-8 shadow-xl overflow-hidden select-none"
     >
       {/* Decorative CSS keyframe for rising tea steam */}
       <style>{`

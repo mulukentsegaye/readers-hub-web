@@ -436,7 +436,7 @@ export const App: React.FC = () => {
 
   return (
     <div
-      className="h-screen max-h-screen flex flex-col w-full transition-colors duration-500 overflow-hidden"
+      className="h-[100dvh] max-h-[100dvh] min-h-[100dvh] flex flex-col w-full transition-colors duration-500 overflow-hidden"
       style={{
         backgroundColor: 'var(--vibe-bg)',
         color: 'var(--vibe-ink)',
@@ -468,13 +468,14 @@ export const App: React.FC = () => {
         onGoToLanding={handleGoToLanding}
         onGoToLogin={() => openAuthModal('signin')}
         onViewProfile={() => handleTabChange('profile')}
+        onViewSanctuary={() => handleTabChange('sanctuary')}
         onSelectBookForTimer={handleSelectBookForTimer}
         onShareBook={(book) => handleOpenCreateModal(book)}
         onViewBookDetails={handleViewBookDetails}
       />
 
       <div 
-        className={`w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 flex-1 min-h-0 flex items-stretch gap-4 sm:gap-6 lg:gap-8 justify-between overflow-hidden transition-opacity duration-300 ease-out ${
+        className={`w-full px-2.5 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 flex-1 min-h-0 flex items-stretch gap-3 sm:gap-6 lg:gap-8 justify-between overflow-hidden transition-opacity duration-300 ease-out ${
           isFullScreenOpen ? 'opacity-30 pointer-events-none' : 'opacity-100'
         }`}
       >
@@ -488,7 +489,7 @@ export const App: React.FC = () => {
 
         <main
           id="main-viewport"
-          className="flex-1 min-w-0 h-full overflow-y-auto overscroll-contain py-4 sm:py-6 pb-36 md:pb-28 px-0.5"
+          className="flex-1 min-w-0 h-full overflow-y-auto overscroll-contain py-3 sm:py-6 pb-[calc(env(safe-area-inset-bottom)+4.75rem)] md:pb-24 px-0.5 sm:px-1"
         >
 
           <TabletSummaryBar

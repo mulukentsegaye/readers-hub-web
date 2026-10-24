@@ -478,9 +478,9 @@ const CategoryBrowseView: React.FC<{
 
       {/* Books Grid */}
       {isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-7">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-7">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="bg-vibe-card border border-vibe-border rounded-2xl p-4 shadow-soft space-y-3 animate-pulse">
+            <div key={i} className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft space-y-3 animate-pulse">
               <div className="aspect-[2/3] w-full rounded-xl bg-vibe-border/50" />
               <div className="h-4 bg-vibe-border/60 rounded w-3/4" />
               <div className="h-3 bg-vibe-border/40 rounded w-1/2" />
@@ -496,7 +496,7 @@ const CategoryBrowseView: React.FC<{
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-7">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-7">
           {books.map((b) => (
             <div
               key={b.id}
@@ -507,7 +507,7 @@ const CategoryBrowseView: React.FC<{
                 firstPublishYear: b.firstPublishYear,
                 workKey: b.workKey,
               })}
-              className="bg-vibe-card border border-vibe-border rounded-2xl p-4 shadow-soft hover:shadow-float hover:border-vibe-border transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+              className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft hover:shadow-float hover:border-vibe-border transition-all duration-300 flex flex-col justify-between group cursor-pointer"
             >
               <div>
                 <BookCardCover
@@ -873,9 +873,9 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
           {/* Search Results Grid */}
           {isSearching && suggestions.length === 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-7">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-7">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="bg-vibe-card border border-vibe-border rounded-2xl p-4 shadow-soft space-y-3 animate-pulse">
+                <div key={i} className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft space-y-3 animate-pulse">
                   <div className="aspect-[2/3] w-full rounded-xl bg-vibe-border/50" />
                   <div className="h-4 bg-vibe-border/60 rounded w-3/4" />
                   <div className="h-3 bg-vibe-border/40 rounded w-1/2" />
@@ -884,12 +884,12 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
             </div>
           ) : suggestions.length > 0 ? (
             <div className="space-y-8">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-7">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-7">
                 {suggestions.map((b) => (
                   <div
                     key={b.id}
                     onClick={() => handleSelectBook(b)}
-                    className="bg-vibe-card border border-vibe-border rounded-2xl p-4 shadow-soft hover:shadow-float hover:border-vibe-border transition-all duration-300 flex flex-col justify-between group cursor-pointer"
+                    className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft hover:shadow-float hover:border-vibe-border transition-all duration-300 flex flex-col justify-between group cursor-pointer"
                   >
                     <div>
                       <BookCardCover
@@ -1047,9 +1047,9 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
               workKey: SPOTLIGHT_BOOK.workKey,
               description: SPOTLIGHT_BOOK.description || SPOTLIGHT_BOOK.tagline,
             })}
-            className="group relative rounded-3xl border border-vibe-border bg-vibe-card p-6 sm:p-8 shadow-soft hover:border-vibe-accent/30 transition-colors duration-300 cursor-pointer overflow-hidden"
+            className="group relative rounded-3xl border border-vibe-border bg-vibe-card p-4 sm:p-8 shadow-soft hover:border-vibe-accent/30 transition-colors duration-300 cursor-pointer overflow-hidden"
           >
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-8 items-center">
               <div className="md:col-span-4 flex justify-center md:justify-start">
                 <div className="relative w-36 sm:w-44 aspect-[2/3] rounded-2xl overflow-hidden shadow-md border border-vibe-border bg-vibe-card-subtle flex-shrink-0">
                   <img

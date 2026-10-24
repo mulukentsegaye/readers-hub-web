@@ -372,7 +372,7 @@ export const BookDetailsView: React.FC<BookDetailsViewProps> = ({
       </div>
 
       {/* Hero: Book Presentation Header */}
-      <div className="rounded-3xl border border-vibe-border bg-vibe-card p-5 sm:p-7 shadow-soft transition-all space-y-5">
+      <div className="rounded-3xl border border-vibe-border bg-vibe-card p-4 sm:p-7 shadow-soft transition-all space-y-4 sm:space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-7 items-center md:items-start">
           
           {/* Left: Book Cover Showcase */}

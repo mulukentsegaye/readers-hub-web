@@ -108,7 +108,7 @@ export const SessionReflectionModal: React.FC = () => {
       onClick={closeReflection}
     >
       <div
-        className="relative w-full max-w-lg rounded-3xl bg-vibe-card border border-vibe-border shadow-2xl p-5 sm:p-7 overflow-hidden transition-all duration-300 celebration-toast-enter"
+        className="relative w-full max-w-lg rounded-3xl bg-vibe-card border border-vibe-border shadow-2xl p-5 sm:p-7 max-h-[92dvh] overflow-y-auto overscroll-contain transition-all duration-300 celebration-toast-enter"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Accent Top Line */}

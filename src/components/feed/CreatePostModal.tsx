@@ -211,7 +211,7 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
       onClick={handleClose}
     >
       <div 
-        className="w-full h-full sm:h-auto sm:max-w-lg rounded-none sm:rounded-3xl p-5 sm:p-6 md:p-8 bg-vibe-card border border-vibe-border text-vibe-ink shadow-vibe-elevated flex flex-col justify-between overflow-y-auto max-h-screen sm:max-h-[90vh] transition-all duration-500"
+        className="w-full h-full sm:h-auto sm:max-w-lg rounded-none sm:rounded-3xl p-4 sm:p-6 md:p-8 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))] bg-vibe-card border border-vibe-border text-vibe-ink shadow-vibe-elevated flex flex-col justify-between overflow-y-auto max-h-screen sm:max-h-[90vh] transition-all duration-500"
         onClick={(e) => e.stopPropagation()}
       >
         <div>

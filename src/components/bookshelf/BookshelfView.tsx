@@ -426,7 +426,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
               {displayedBooks.map((b) => {
                 const isFinished = b.statusCode === 'finished';
                 const isReading = b.statusCode === 'currently_reading';
@@ -436,10 +436,10 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                 return (
                   <div 
                     key={b.id} 
-                    className="bg-vibe-card border border-vibe-border rounded-2xl p-4 shadow-soft flex flex-col justify-between hover:shadow-float transition-shadow duration-200 group relative"
+                    className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft flex flex-col justify-between hover:shadow-float transition-shadow duration-200 group relative"
                   >
                     {/* Book Cover Presentation */}
-                    <div className="relative mb-3.5 group/cover">
+                    <div className="relative mb-2.5 sm:mb-3.5 group/cover">
                       <BookshelfCoverCard
                         title={b.title}
                         author={b.author}
@@ -457,7 +457,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                               e.stopPropagation();
                               setActiveMenuId(isMenuOpen ? null : b.id);
                             }}
-                            className="p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md transition-all active:scale-95 shadow-xs"
+                            className="p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md transition-all active:scale-95 shadow-xs cursor-pointer"
                             title="Manage Book"
                           >
                             <MoreVertical className="w-3.5 h-3.5" />
@@ -475,7 +475,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                               <button
                                 type="button"
                                 onClick={(e) => handleUpdateStatus(e, b, 'want_to_read')}
-                                className="w-full text-left px-3 py-1.5 text-xs rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between"
+                                className="w-full text-left px-3 py-1.5 text-xs rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between cursor-pointer"
                               >
                                 <span>Want to Read</span>
                                 {isWantToRead && <Check className="w-3.5 h-3.5 text-vibe-accent" />}
@@ -484,7 +484,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                               <button
                                 type="button"
                                 onClick={(e) => handleUpdateStatus(e, b, 'currently_reading')}
-                                className="w-full text-left px-3 py-1.5 text-xs rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between"
+                                className="w-full text-left px-3 py-1.5 text-xs rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between cursor-pointer"
                               >
                                 <span>Currently Reading</span>
                                 {isReading && <Check className="w-3.5 h-3.5 text-vibe-accent" />}
@@ -493,7 +493,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                               <button
                                 type="button"
                                 onClick={(e) => handleUpdateStatus(e, b, 'finished')}
-                                className="w-full text-left px-3 py-1.5 text-xs rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between"
+                                className="w-full text-left px-3 py-1.5 text-xs rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between cursor-pointer"
                               >
                                 <span>Finished</span>
                                 {isFinished && <Check className="w-3.5 h-3.5 text-vibe-accent" />}
@@ -503,7 +503,7 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                                 <button
                                   type="button"
                                   onClick={(e) => handleRemoveBook(e, b.id, b.title)}
-                                  className="w-full text-left px-3 py-1.5 text-xs rounded-xl text-red-600 hover:bg-red-500/10 transition-colors flex items-center justify-between"
+                                  className="w-full text-left px-3 py-1.5 text-xs rounded-xl text-red-600 hover:bg-red-500/10 transition-colors flex items-center justify-between cursor-pointer"
                                 >
                                   <span>Remove</span>
                                   <Trash2 className="w-3.5 h-3.5" />
@@ -523,21 +523,21 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                     </div>
 
                     {/* Meta & Actions */}
-                    <div className="space-y-3">
+                    <div className="space-y-2.5 sm:space-y-3">
                       <div>
                         <h3
                           onClick={() => onViewBookDetails?.(b.title, b.author, b.coverUrl)}
-                          className="font-heading text-base font-semibold text-vibe-ink line-clamp-1 group-hover:text-vibe-accent transition-colors cursor-pointer hover:underline"
+                          className="font-heading text-xs sm:text-base font-semibold text-vibe-ink line-clamp-1 group-hover:text-vibe-accent transition-colors cursor-pointer hover:underline leading-snug"
                           title={`View book info and overview for "${b.title}"`}
                         >
                           {b.title}
                         </h3>
-                        <p className="text-xs text-vibe-ink-muted mt-0.5 line-clamp-1">{b.author}</p>
+                        <p className="text-[10px] sm:text-xs text-vibe-ink-muted mt-0.5 line-clamp-1">{b.author}</p>
                       </div>
 
                       {/* Reading Progress Bar */}
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-xs text-vibe-ink-muted">
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[10px] sm:text-xs text-vibe-ink-muted">
                           <span className="font-medium text-vibe-ink-secondary">Progress</span>
                           <span className="font-mono font-semibold text-vibe-ink">{b.progress}%</span>
                         </div>
@@ -552,20 +552,20 @@ export const BookshelfView: React.FC<BookshelfViewProps> = ({
                       </div>
 
                       {/* Card Button */}
-                      <div className="grid grid-cols-2 gap-2 pt-1">
+                      <div className="grid grid-cols-2 gap-1.5 pt-0.5">
                         <button 
                           onClick={() => handleStartTimerForBook(b.title, b.author, b.coverUrl)} 
-                          className="py-2 px-2 rounded-xl text-xs font-semibold bg-vibe-accent hover:bg-vibe-accent-hover text-white transition-all duration-200 flex items-center justify-center gap-1.5 active:scale-95 shadow-xs truncate"
+                          className="py-1.5 sm:py-2 px-1.5 sm:px-2 rounded-xl text-[10px] sm:text-xs font-semibold bg-vibe-accent hover:bg-vibe-accent-hover text-white transition-all duration-200 flex items-center justify-center gap-1 active:scale-95 shadow-xs truncate cursor-pointer"
                         >
-                          <Play className="w-3.5 h-3.5 fill-current flex-shrink-0" />
+                          <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current flex-shrink-0" />
                           <span className="truncate">{isFinished ? 'Re-read' : 'Read'}</span>
                         </button>
 
                         <button
                           onClick={() => onViewBookDetails?.(b.title, b.author, b.coverUrl)}
-                          className="py-2 px-2 rounded-xl text-xs font-medium bg-vibe-card-subtle hover:bg-vibe-card text-vibe-ink border border-vibe-border hover:border-vibe-accent transition-all duration-200 flex items-center justify-center gap-1 active:scale-95 shadow-xs truncate"
+                          className="py-1.5 sm:py-2 px-1.5 sm:px-2 rounded-xl text-[10px] sm:text-xs font-medium bg-vibe-card-subtle hover:bg-vibe-card text-vibe-ink border border-vibe-border hover:border-vibe-accent transition-all duration-200 flex items-center justify-center gap-1 active:scale-95 shadow-xs truncate cursor-pointer"
                         >
-                          <Sparkles className="w-3.5 h-3.5 text-vibe-accent flex-shrink-0" />
+                          <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-vibe-accent flex-shrink-0" />
                           <span className="truncate">Overview</span>
                         </button>
                       </div>

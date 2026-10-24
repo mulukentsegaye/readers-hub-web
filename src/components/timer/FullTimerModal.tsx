@@ -144,7 +144,7 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
       role="dialog"
       aria-modal="true"
       aria-label="Distraction-free reading timer"
-      className={`fixed inset-0 z-50 flex flex-col justify-between p-4 sm:p-8 md:p-12 overflow-y-auto bg-vibe-bg text-vibe-ink backdrop-blur-md transition-colors duration-500 ${transitionClass}`}
+      className={`fixed inset-0 z-50 flex flex-col justify-between p-4 sm:p-8 md:p-12 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))] overflow-y-auto bg-vibe-bg text-vibe-ink backdrop-blur-md transition-colors duration-500 ${transitionClass}`}
     >
       {/* Signature Liread Ambient Top Beam during Transition */}
       {transitionStage !== 'idle' && (

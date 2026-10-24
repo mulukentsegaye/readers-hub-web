@@ -12,6 +12,7 @@ interface HeaderProps {
   onGoToLanding?: () => void;
   onGoToLogin?: () => void;
   onViewProfile?: () => void;
+  onViewSanctuary?: () => void;
   onSelectBookForTimer?: (title: string, author: string, cover?: string) => void;
   onShareBook?: (book: { title: string; author: string; coverImageUrl?: string }) => void;
   onViewBookDetails?: (book: SuggestedBook) => void;
@@ -23,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
   onGoToLanding, 
   onGoToLogin,
   onViewProfile,
+  onViewSanctuary,
   onSelectBookForTimer,
   onShareBook,
   onViewBookDetails,
@@ -217,7 +219,7 @@ export const Header: React.FC<HeaderProps> = ({
     if (!showDropdown || searchVal.trim().length < 2) return null;
 
     return (
-      <div className="absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl border border-vibe-border bg-vibe-card shadow-2xl overflow-hidden max-h-96 overflow-y-auto backdrop-blur-md animate-in fade-in zoom-in-95 duration-150">
+      <div className="absolute left-0 right-0 top-full mt-2 z-50 rounded-2xl border border-vibe-border bg-vibe-card shadow-2xl overflow-hidden max-h-[65vh] sm:max-h-96 overflow-y-auto overscroll-contain backdrop-blur-md animate-in fade-in zoom-in-95 duration-150">
         {/* Header bar */}
         <div className="px-3.5 py-2.5 bg-vibe-card-subtle/90 border-b border-vibe-border flex items-center justify-between text-xs text-vibe-ink-muted font-medium">
           {isOffline ? (
@@ -453,14 +455,14 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-vibe-border bg-vibe-card border-b border-vibe-border">
-      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 py-0 flex items-center h-14 sm:h-15 gap-3 sm:gap-4">
+    <header className="sticky top-0 z-30 w-full border-b border-vibe-border bg-vibe-card/95 backdrop-blur-md">
+      <div className="w-full px-2.5 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 py-0 flex items-center h-14 sm:h-15 gap-2 sm:gap-4">
 
         {/* Brand / Logo */}
         <button
           type="button"
           onClick={onGoToLanding}
-          className="flex items-center gap-2.5 flex-shrink-0 group outline-none cursor-pointer"
+          className="flex items-center gap-2 sm:gap-2.5 flex-shrink-0 group outline-none cursor-pointer"
           title="Liread — Home"
         >
           <LireadLogo size="md" className="transition-transform group-hover:scale-105 group-active:scale-95" />
@@ -546,17 +548,29 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Streak badge (mobile) */}
-          <div className="flex sm:hidden items-center gap-1 px-2 py-1 rounded-lg bg-vibe-accent-subtle border border-vibe-accent/20 text-vibe-accent">
+          {/* Streak badge (mobile - clickable to Sanctuary) */}
+          <button
+            type="button"
+            onClick={onViewSanctuary || onViewProfile}
+            aria-label={`Current streak: ${user?.currentStreak ?? 0} days`}
+            className="flex sm:hidden items-center gap-1 px-2 py-1 rounded-lg bg-vibe-accent-subtle border border-vibe-accent/20 text-vibe-accent active:scale-95 transition-transform cursor-pointer"
+            title="View reading streak in Sanctuary"
+          >
             <Flame className="w-3.5 h-3.5 fill-current" />
             <span className="font-mono text-xs font-semibold leading-none">{user?.currentStreak ?? 0}</span>
-          </div>
+          </button>
 
-          {/* Streak badge (desktop) */}
-          <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-vibe-accent-subtle border border-vibe-accent/20 text-vibe-accent">
+          {/* Streak badge (desktop - clickable to Sanctuary) */}
+          <button
+            type="button"
+            onClick={onViewSanctuary || onViewProfile}
+            aria-label={`Current streak: ${user?.currentStreak ?? 0} days`}
+            className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-vibe-accent-subtle border border-vibe-accent/20 text-vibe-accent hover:border-vibe-accent/40 active:scale-95 transition-all cursor-pointer"
+            title="View reading streak in Sanctuary"
+          >
             <Flame className="w-3.5 h-3.5 fill-current" />
             <span className="font-mono text-xs font-semibold">{user?.currentStreak ?? 0}d</span>
-          </div>
+          </button>
 
           {/* Notifications */}
           <div className="relative">

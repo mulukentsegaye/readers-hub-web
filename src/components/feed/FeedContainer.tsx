@@ -59,23 +59,23 @@ export const FeedContainer: React.FC<FeedContainerProps> = ({
         <p className="font-sans text-[10.5px] font-medium tracking-wider uppercase text-vibe-ink-muted/80 mb-1">
           Today's Reading Feed
         </p>
-        <h1 className="font-display text-2xl sm:text-3xl font-normal tracking-tight text-vibe-ink leading-tight">
+        <h1 className="font-display text-xl sm:text-3xl font-normal tracking-tight text-vibe-ink leading-tight">
           A good day for a good book.
         </h1>
       </div>
 
       {/* Share bar / write prompt */}
       <div
-        className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft flex items-center gap-3 hover:border-vibe-accent/30 transition-all group cursor-pointer"
+        className="bg-vibe-card border border-vibe-border rounded-2xl p-3 sm:p-4 shadow-soft flex items-center gap-2.5 sm:gap-3 hover:border-vibe-accent/30 transition-all group cursor-pointer"
         onClick={onOpenCreateModal}
       >
         <img
           src={getUserAvatar(user)}
           alt={isRealUser ? (user?.fullName ?? 'User avatar') : 'Liread avatar'}
-          className="w-9 h-9 rounded-full object-cover flex-shrink-0 ring-1 ring-vibe-border"
+          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover flex-shrink-0 ring-1 ring-vibe-border"
         />
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-vibe-ink transition-colors">
+          <p className="text-xs sm:text-sm font-medium text-vibe-ink transition-colors truncate">
             {userFirstName ? (
               <>
                 What are you reading, <span className="font-medium text-vibe-ink">{userFirstName}</span>?
@@ -84,11 +84,11 @@ export const FeedContainer: React.FC<FeedContainerProps> = ({
               'What are you reading?'
             )}
           </p>
-          <p className="text-xs text-vibe-ink-muted mt-0.5">Share a passage, a rating, or a reflection...</p>
+          <p className="text-[11px] sm:text-xs text-vibe-ink-muted mt-0.5 truncate">Share a passage, a rating, or a reflection...</p>
         </div>
         <button
           onClick={(e) => { e.stopPropagation(); onOpenCreateModal(); }}
-          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-xl bg-vibe-accent hover:bg-vibe-accent-hover text-white text-xs font-medium shadow-xs transition-colors"
+          className="flex-shrink-0 flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-vibe-accent hover:bg-vibe-accent-hover text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" strokeWidth={2} />
           <span>Share</span>

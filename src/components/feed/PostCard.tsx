@@ -179,7 +179,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, 
     <article className="bg-vibe-card border border-vibe-border rounded-2xl relative shadow-soft hover:shadow-float transition-shadow duration-200 group">
 
       {/* Author header */}
-      <div className="flex items-center justify-between px-5 pt-4 pb-0">
+      <div className="flex items-center justify-between px-3.5 sm:px-5 pt-3.5 sm:pt-4 pb-0">
         <div className="flex items-center gap-3 min-w-0">
           <img
             src={post.authorAvatar}
@@ -328,8 +328,8 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, 
       </div>
 
       {/* Book + Quote block */}
-      <div className="px-5 pt-4">
-        <div className="flex gap-4 items-stretch">
+      <div className="px-3.5 sm:px-5 pt-3 sm:pt-4">
+        <div className="flex gap-3 sm:gap-4 items-stretch">
 
           {/* Book cover & info trigger */}
           <div
@@ -399,7 +399,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, 
 
       {/* Star rating */}
       {post.rating && (
-        <div className="px-5 pt-3 flex items-center gap-1">
+        <div className="px-3.5 sm:px-5 pt-2.5 sm:pt-3 flex items-center gap-1">
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
               key={i}
@@ -413,15 +413,15 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, 
 
       {/* Recommendation text */}
       {post.recommendationText && (
-        <div className="px-5 pt-3">
-          <p className="text-sm text-vibe-ink-secondary leading-relaxed">
+        <div className="px-3.5 sm:px-5 pt-2.5 sm:pt-3">
+          <p className="text-xs sm:text-sm text-vibe-ink-secondary leading-relaxed">
             {post.recommendationText}
           </p>
         </div>
       )}
 
       {/* Footer actions */}
-      <div className="flex items-center justify-between px-5 pt-3 pb-3.5 mt-1 border-t border-vibe-border-subtle">
+      <div className="flex items-center justify-between px-3.5 sm:px-5 pt-2.5 sm:pt-3 pb-3 sm:pb-3.5 mt-1 border-t border-vibe-border-subtle">
         <div className="flex items-center gap-1">
           {/* Heart / upvote with Spring Bounce & Animated Counter */}
           <button

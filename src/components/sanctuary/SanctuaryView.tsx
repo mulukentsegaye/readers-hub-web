@@ -485,9 +485,9 @@ export const SanctuaryView: React.FC<SanctuaryViewProps> = ({
                   </div>
 
                   {/* Right: Personal Consistency Stats */}
-                  <div className="flex items-center gap-4 sm:gap-6 self-end sm:self-auto">
+                  <div className="flex items-center justify-between w-full sm:w-auto sm:justify-end gap-3 sm:gap-6 pt-1 sm:pt-0 border-t sm:border-t-0 border-vibe-border-subtle">
                     {/* Goal Completion */}
-                    <div className="text-right">
+                    <div className="text-left sm:text-right">
                       <span className="font-mono text-xs sm:text-sm font-bold tabular-nums text-emerald-600 dark:text-emerald-400 block">
                         {reader.goalCompletionPercent}% of daily plan
                       </span>

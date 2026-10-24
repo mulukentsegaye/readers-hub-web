@@ -50,7 +50,7 @@ export const GoalAdjustModal: React.FC = () => {
       onClick={closeGoalModal}
     >
       <div
-        className="relative w-full max-w-md rounded-3xl bg-vibe-card border border-vibe-border shadow-2xl p-6 sm:p-7 overflow-hidden transition-all duration-300 celebration-toast-enter"
+        className="relative w-full max-w-md rounded-3xl bg-vibe-card border border-vibe-border shadow-2xl p-6 sm:p-7 max-h-[92dvh] overflow-y-auto overscroll-contain transition-all duration-300 celebration-toast-enter"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Accent Line */}

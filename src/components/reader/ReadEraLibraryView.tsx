@@ -317,12 +317,12 @@ export const ReadEraLibraryView: React.FC<ReadEraLibraryViewProps> = ({ onOpenBo
         </div>
       ) : (
         /* Books Grid */
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {filteredBooks.map((book) => (
             <div
               key={book.id}
               onClick={() => handleOpenBook(book)}
-              className="group bg-vibe-card border border-vibe-border rounded-2xl p-4 shadow-soft hover:shadow-float transition-all duration-200 cursor-pointer flex flex-col justify-between"
+              className="group bg-vibe-card border border-vibe-border rounded-2xl p-3.5 sm:p-4 shadow-soft hover:shadow-float transition-all duration-200 cursor-pointer flex flex-col justify-between"
             >
               <div>
                 {/* Top header row: format pill & favorite button */}

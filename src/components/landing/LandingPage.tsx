@@ -223,14 +223,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
           3. CORE PRODUCT ARCHITECTURE: INTRO BANNER
           ============================================================================== */}
       <section id="features" className="w-full pt-16 sm:pt-24 pb-4 px-4 sm:px-6 lg:px-12 border-t border-vibe-border">
-        <ScrollRevealCard delayMs={40} className="max-w-3xl mx-auto text-center space-y-3">
+        <div className="max-w-3xl mx-auto text-center space-y-3">
           <h2 className="text-2xl sm:text-4xl font-display font-normal text-vibe-ink tracking-tight">
             Everything You Need to Read More Deeply
           </h2>
           <p className="text-xs sm:text-sm text-vibe-ink-secondary leading-relaxed max-w-xl mx-auto">
             No distracting ads, no infinite dopamine doom-scrolling. Just pure focus, literary connection, and timeless tools.
           </p>
-        </ScrollRevealCard>
+        </div>
       </section>
 
       {/* ==============================================================================

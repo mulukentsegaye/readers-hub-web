@@ -14,15 +14,20 @@ interface ScrollRevealCardProps {
  * High-performance, tactile scroll reveal component.
  * Causes cards to smoothly "pop up" into place as the user scrolls into each section,
  * using an Apple/Linear-grade cubic-bezier spring curve.
+ * 
+ * Engineered with bulletproof fallbacks:
+ * - Never leaves cards trapped in invisible opacity:0 state.
+ * - Triggers generously before elements hit the viewport bottom.
+ * - Locks revealed state once triggered so scrolling back/forth doesn't flash white space.
  */
 export const ScrollRevealCard: React.FC<ScrollRevealCardProps> = ({
   children,
   className = '',
   delayMs = 0,
-  threshold = 0.12,
-  scaleFrom = 0.94,
-  translateY = 32,
-  durationMs = 700,
+  threshold = 0.04,
+  scaleFrom = 0.96,
+  translateY = 24,
+  durationMs = 650,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -31,10 +36,29 @@ export const ScrollRevealCard: React.FC<ScrollRevealCardProps> = ({
     const el = containerRef.current;
     if (!el) return;
 
-    // Check if the card is already in the viewport on mount
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
+    // Safety fallback: guarantee visible state after a short delay so cards never stay blank
+    const fallbackTimer = setTimeout(() => {
       setIsVisible(true);
+    }, 900);
+
+    // If IntersectionObserver is not available, immediately show
+    if (!('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      clearTimeout(fallbackTimer);
+      return;
+    }
+
+    // Check if the card is already in the viewport on mount
+    try {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 50 && rect.bottom > 0) {
+        setIsVisible(true);
+        clearTimeout(fallbackTimer);
+      }
+    } catch {
+      setIsVisible(true);
+      clearTimeout(fallbackTimer);
+      return;
     }
 
     const observer = new IntersectionObserver(
@@ -42,23 +66,23 @@ export const ScrollRevealCard: React.FC<ScrollRevealCardProps> = ({
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-          } else {
-            // Only reset if user scrolls back up completely above this card
-            // so that scrolling down triggers the smooth pop up again
-            if (entry.boundingClientRect.top > window.innerHeight) {
-              setIsVisible(false);
-            }
+            clearTimeout(fallbackTimer);
+            observer.disconnect();
           }
         });
       },
       {
         threshold,
-        rootMargin: '0px 0px -40px 0px', // Triggers slightly before reaching the bottom
+        rootMargin: '120px 0px 40px 0px', // Pre-trigger generously before entering bottom
       }
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
+
+    return () => {
+      clearTimeout(fallbackTimer);
+      observer.disconnect();
+    };
   }, [threshold]);
 
   return (
@@ -74,7 +98,6 @@ export const ScrollRevealCard: React.FC<ScrollRevealCardProps> = ({
         transitionDuration: `${durationMs}ms`,
         transitionDelay: `${delayMs}ms`,
         transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-        pointerEvents: isVisible ? 'auto' : 'none',
       }}
     >
       {children}

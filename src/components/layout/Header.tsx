@@ -3,6 +3,7 @@ import { Search, Bell, BookOpen, Flame, X, Loader2, ChevronRight, WifiOff, Refre
 import { useAuthStore } from '../../stores/authStore';
 import { getUserAvatar } from '../../utils/avatar';
 import { VibeTriggerButton } from '../theme/VibeTriggerButton';
+import { LireadLogo } from '../ui/LireadLogo';
 import { bookSearchService, SuggestedBook, isOfflineOrNetworkError } from '../../services/bookSearchService';
 
 interface HeaderProps {
@@ -462,9 +463,7 @@ export const Header: React.FC<HeaderProps> = ({
           className="flex items-center gap-2.5 flex-shrink-0 group outline-none cursor-pointer"
           title="Liread — Home"
         >
-          <div className="w-8 h-8 rounded-xl bg-vibe-accent flex items-center justify-center shadow-sm transition-all group-hover:scale-105 group-active:scale-95">
-            <BookOpen className="w-4 h-4 text-white" strokeWidth={2.5} />
-          </div>
+          <LireadLogo size="md" className="transition-transform group-hover:scale-105 group-active:scale-95" />
           <span className="font-display text-lg sm:text-xl font-semibold tracking-tight text-vibe-ink hidden sm:block">
             Liread
           </span>

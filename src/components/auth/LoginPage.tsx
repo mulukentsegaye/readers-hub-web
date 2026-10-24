@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LireadLogo } from '../ui/LireadLogo';
 import { 
   BookOpen, 
   Mail, 
@@ -196,9 +197,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onGoBack, onGue
             className="flex items-center gap-2 sm:hidden cursor-pointer"
             title="Return to Landing"
           >
-            <div className="w-7 h-7 rounded-lg bg-vibe-accent flex items-center justify-center text-white shadow-xs">
-              <BookOpen className="w-4 h-4 text-white" />
-            </div>
+            <LireadLogo size="sm" />
             <span className="font-display text-lg font-bold tracking-tight text-vibe-ink">
               Liread
             </span>
@@ -220,9 +219,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onSuccess, onGoBack, onGue
                 className="flex items-center gap-2.5 text-left cursor-pointer group"
                 title="Return to Landing"
               >
-                <div className="w-9 h-9 rounded-xl bg-vibe-accent flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
-                  <BookOpen className="w-5 h-5 text-white" />
-                </div>
+                <LireadLogo size="md" className="group-hover:scale-105 transition-transform" />
                 <span className="font-display text-2xl font-bold tracking-tight text-vibe-ink group-hover:text-vibe-accent transition-colors">
                   Liread
                 </span>

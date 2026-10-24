@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LireadLogo } from '../ui/LireadLogo';
 import { 
   BookOpen, 
   Sparkles, 
@@ -86,10 +87,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
         <div className="w-full flex items-center justify-between gap-4">
           
           {/* Logo & Manifesto link */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-vibe-accent flex items-center justify-center text-white shadow-xs transition-transform active:scale-95">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
+          <div className="flex items-center gap-2.5">
+            <LireadLogo size="md" className="transition-transform active:scale-95" />
             <div>
               <span className="font-display text-xl sm:text-2xl font-bold tracking-tight text-vibe-ink">
                 Liread
@@ -841,9 +840,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-vibe-accent flex items-center justify-center text-white shadow-xs">
-              <BookOpen className="w-4 h-4" />
-            </div>
+            <LireadLogo size="xs" />
             <span className="font-display text-base font-bold text-vibe-ink">Liread</span>
             <span className="text-[11px]">© 2026 Liread Inc. All rights reserved.</span>
           </div>

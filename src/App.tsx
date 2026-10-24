@@ -489,7 +489,7 @@ export const App: React.FC = () => {
 
         <main
           id="main-viewport"
-          className="flex-1 min-w-0 h-full overflow-y-auto overscroll-contain py-3 sm:py-6 pb-[calc(env(safe-area-inset-bottom)+4.75rem)] md:pb-24 px-0.5 sm:px-1"
+          className="flex-1 min-w-0 h-full overflow-y-auto overflow-x-hidden overscroll-contain py-3 sm:py-6 pb-[calc(env(safe-area-inset-bottom)+4.75rem)] md:pb-24 px-0.5 sm:px-1 w-full max-w-full"
         >
 
           <TabletSummaryBar

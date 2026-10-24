@@ -17,6 +17,19 @@ export default defineConfig({
   optimizeDeps: {
     include: ['epubjs', 'jszip'],
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-icons': ['lucide-react'],
+          'vendor-charts': ['recharts'],
+          'vendor-supabase': ['@supabase/supabase-js'],
+          'vendor-reader': ['pdfjs-dist', 'epubjs', 'jszip'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1200,
+  },
   server: {
     port: 3000,
     open: false,

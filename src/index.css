@@ -142,8 +142,10 @@
     color: var(--vibe-ink);
     min-height: 100vh;
     font-family: var(--font-sans);
-    overflow-x: clip;
+    overflow-x: hidden;
+    max-width: 100vw;
     width: 100%;
+    overscroll-behavior-x: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
@@ -157,6 +159,8 @@
 
   #root {
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     min-height: 100vh;
   }
 

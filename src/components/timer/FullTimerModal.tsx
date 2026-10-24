@@ -144,7 +144,7 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
       role="dialog"
       aria-modal="true"
       aria-label="Distraction-free reading timer"
-      className={`fixed inset-0 z-50 flex flex-col justify-between p-4 sm:p-8 md:p-12 pt-[max(1rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))] overflow-y-auto bg-vibe-bg text-vibe-ink backdrop-blur-md transition-colors duration-500 ${transitionClass}`}
+      className={`fixed inset-0 z-50 flex flex-col justify-between p-3.5 sm:p-8 md:p-12 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(1rem,env(safe-area-inset-bottom))] overflow-y-auto overflow-x-hidden w-full max-w-full bg-vibe-bg text-vibe-ink backdrop-blur-md transition-colors duration-500 ${transitionClass}`}
     >
       {/* Signature Liread Ambient Top Beam during Transition */}
       {transitionStage !== 'idle' && (
@@ -152,34 +152,34 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
       )}
 
       {/* Top Header */}
-      <div className="flex items-center justify-between max-w-4xl w-full mx-auto relative z-10 timer-element-reveal-1">
-        <div className="flex items-center gap-2.5 sm:gap-3">
+      <div className="flex items-center justify-between max-w-4xl w-full mx-auto relative z-10 timer-element-reveal-1 gap-2">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
           <button
             onClick={() => handleClose()}
             aria-label={`Back to ${backDestinationName}`}
-            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-all active:scale-95 shadow-xs group"
+            className="w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-all active:scale-95 shadow-xs group flex-shrink-0 cursor-pointer"
             title={`Back to ${backDestinationName}`}
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
           </button>
 
-          <div className="w-8 h-8 rounded-xl bg-vibe-accent text-white flex items-center justify-center flex-shrink-0 shadow-xs">
+          <div className="hidden xs:flex w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-vibe-accent text-white items-center justify-center flex-shrink-0 shadow-xs">
             <BookOpen className="w-4 h-4" />
           </div>
-          <div>
-            <h2 className="font-heading text-xs sm:text-sm font-semibold text-vibe-ink">
+          <div className="min-w-0">
+            <h2 className="font-heading text-xs sm:text-sm font-semibold text-vibe-ink truncate">
               Distraction-Free Reading
             </h2>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
           <AmbientAudioController compact />
 
           <button
             onClick={() => handleClose()}
             aria-label="Close timer"
-            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-colors shadow-xs"
+            className="w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-colors shadow-xs flex-shrink-0 cursor-pointer"
             title="Close timer"
           >
             <X className="w-5 h-5" />
@@ -188,10 +188,10 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
       </div>
 
       {/* Center Focus Display */}
-      <div className="flex flex-col items-center justify-center text-center max-w-lg mx-auto space-y-4 sm:space-y-6 my-auto py-6 relative z-10 timer-element-reveal-2">
+      <div className="w-full max-w-lg mx-auto flex flex-col items-center justify-center text-center space-y-3 sm:space-y-6 my-auto py-3 sm:py-6 relative z-10 timer-element-reveal-2 px-1">
         
         {/* Book Jacket Art */}
-        <div className="relative w-24 h-36 sm:w-32 sm:h-48 rounded-lg shadow-vibe-elevated border border-vibe-border bg-vibe-card overflow-hidden flex flex-col items-center justify-between text-center">
+        <div className="relative w-24 h-36 sm:w-32 sm:h-48 rounded-lg shadow-vibe-elevated border border-vibe-border bg-vibe-card overflow-hidden flex flex-col items-center justify-between text-center flex-shrink-0">
           {coverImageUrl ? (
             <img
               src={coverImageUrl}
@@ -215,28 +215,28 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
         </div>
 
         {/* Current Book Info */}
-        <div className="space-y-0.5">
-          <h1 className="font-display text-xl sm:text-2xl md:text-3xl font-normal leading-tight text-vibe-ink break-words">
+        <div className="space-y-0.5 max-w-full px-2">
+          <h1 className="font-display text-xl sm:text-2xl md:text-3xl font-normal leading-tight text-vibe-ink break-words line-clamp-2">
             {bookTitle}
           </h1>
-          <p className="text-xs text-vibe-ink-muted">
+          <p className="text-xs text-vibe-ink-muted truncate">
             by {bookAuthor}
           </p>
         </div>
 
         {/* Digital Clock */}
-        <div className="font-mono text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-semibold tracking-wider py-2 select-none drop-shadow-sm text-vibe-ink">
+        <div className="font-mono text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-semibold tracking-wider py-1 sm:py-2 select-none drop-shadow-sm text-vibe-ink tabular-nums">
           <span>{formatHours}</span>:
           <span>{formatMins}</span>:
           <span>{formatSecs}</span>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-3 sm:gap-4 pt-2">
+        <div className="flex items-center justify-center gap-2.5 sm:gap-4 pt-1 w-full max-w-full">
           <button
             onClick={resetTimer}
             aria-label="Reset timer"
-            className="min-w-[48px] min-h-[48px] p-3 rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-all shadow-xs flex items-center justify-center active:scale-95"
+            className="w-11 h-11 sm:w-12 sm:h-12 p-2.5 rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-all shadow-xs flex items-center justify-center active:scale-95 flex-shrink-0 cursor-pointer"
             title="Reset timer"
           >
             <RotateCcw className="w-5 h-5" />
@@ -245,7 +245,7 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
           <button
             onClick={isRunning ? pauseTimer : resumeTimer}
             aria-label={isRunning ? 'Pause reading' : (seconds > 0 ? 'Resume reading' : 'Start reading')}
-            className="min-h-[48px] flex items-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-vibe-accent hover:bg-vibe-accent-hover text-white text-sm sm:text-base font-medium shadow-lg transition-all active:scale-95"
+            className="h-11 sm:h-12 flex items-center justify-center gap-2 px-5 sm:px-8 rounded-full bg-vibe-accent hover:bg-vibe-accent-hover text-white text-xs sm:text-base font-medium shadow-lg transition-all active:scale-95 flex-shrink-0 cursor-pointer"
           >
             {isRunning ? (
               <>
@@ -263,7 +263,7 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
           <button
             onClick={handleStopAndSave}
             aria-label="Finish and save reading session"
-            className="min-w-[48px] min-h-[48px] p-3 rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-all shadow-xs flex items-center justify-center active:scale-95"
+            className="w-11 h-11 sm:w-12 sm:h-12 p-2.5 rounded-full border border-vibe-border bg-vibe-card text-vibe-ink-secondary hover:text-vibe-ink hover:bg-vibe-card-subtle transition-all shadow-xs flex items-center justify-center active:scale-95 flex-shrink-0 cursor-pointer"
             title="Finish & log session"
           >
             <Square className="w-5 h-5 fill-current" />
@@ -271,15 +271,15 @@ export const FullTimerModal: React.FC<FullTimerModalProps> = ({ previousTab = 'f
         </div>
 
         {/* Ambient Background Audio paired with Active Vibe */}
-        <div className="w-full pt-3">
+        <div className="w-full pt-1 sm:pt-3">
           <AmbientAudioController />
         </div>
 
       </div>
 
       {/* Bottom Quote & Tip */}
-      <div className="text-center max-w-xl mx-auto pt-4 relative z-10 timer-element-reveal-3">
-        <p className="font-display italic text-sm sm:text-base text-vibe-ink-secondary leading-relaxed font-normal">
+      <div className="w-full text-center max-w-xl mx-auto pt-2 sm:pt-4 relative z-10 timer-element-reveal-3 px-2 break-words">
+        <p className="font-display italic text-xs sm:text-base text-vibe-ink-secondary leading-relaxed font-normal">
           “The more that you read, the more things you will know. The more that you learn, the more places you'll go.”
         </p>
         <span className="text-[10px] font-mono mt-1 block text-vibe-ink-muted">

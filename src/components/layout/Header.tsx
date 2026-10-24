@@ -10,6 +10,7 @@ interface HeaderProps {
   onSeeAll?: (query: string) => void;
   onGoToLanding?: () => void;
   onGoToLogin?: () => void;
+  onViewProfile?: () => void;
   onSelectBookForTimer?: (title: string, author: string, cover?: string) => void;
   onShareBook?: (book: { title: string; author: string; coverImageUrl?: string }) => void;
   onViewBookDetails?: (book: SuggestedBook) => void;
@@ -20,6 +21,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSeeAll,
   onGoToLanding, 
   onGoToLogin,
+  onViewProfile,
   onSelectBookForTimer,
   onShareBook,
   onViewBookDetails,
@@ -596,9 +598,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Profile avatar */}
           <button
             type="button"
-            onClick={onGoToLogin}
+            onClick={onViewProfile || onGoToLogin}
             className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-transparent hover:ring-vibe-accent/40 transition-all active:scale-95 flex-shrink-0 cursor-pointer"
-            title={`${user?.fullName ?? 'Guest'} — Account settings`}
+            title={`${user?.fullName ?? 'Guest'} — View profile`}
           >
             <img
               src={getUserAvatar(user)}

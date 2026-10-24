@@ -13,6 +13,7 @@ import { SanctuaryView } from './components/sanctuary/SanctuaryView';
 import { BookshelfView } from './components/bookshelf/BookshelfView';
 import { BookDetailsView } from './components/book/BookDetailsView';
 import { ExploreView } from './components/explore/ExploreView';
+import { ProfileView } from './components/profile/ProfileView';
 import { useReaderStore } from './stores/readerStore';
 
 const ReadEraLibraryView = React.lazy(() =>
@@ -300,6 +301,7 @@ export const App: React.FC = () => {
       setFullScreenOpen(true);
       return;
     }
+    setPreviousTab(activeTab);
     setActiveTab(tab);
     const mainEl = document.getElementById('main-viewport');
     if (mainEl) {
@@ -464,7 +466,8 @@ export const App: React.FC = () => {
         }}
         onSeeAll={handleSeeAllBooks}
         onGoToLanding={handleGoToLanding}
-        onGoToLogin={() => openAuthModal('account')}
+        onGoToLogin={() => openAuthModal('signin')}
+        onViewProfile={() => handleTabChange('profile')}
         onSelectBookForTimer={handleSelectBookForTimer}
         onShareBook={(book) => handleOpenCreateModal(book)}
         onViewBookDetails={handleViewBookDetails}
@@ -480,7 +483,7 @@ export const App: React.FC = () => {
           activeTab={activeTab}
           onTabChange={handleTabChange}
           onGoToLanding={handleGoToLanding}
-          onGoToLogin={() => openAuthModal('account')}
+          onGoToLogin={() => openAuthModal('signin')}
         />
 
         <main
@@ -554,6 +557,15 @@ export const App: React.FC = () => {
                   handleViewBookDetails({ title, author, coverImageUrl: cover })
                 }
                 onExploreClick={() => handleTabChange('explore')}
+              />
+            )}
+
+            {activeTab === 'profile' && (
+              <ProfileView
+                onBack={() => handleTabChange(previousTab || 'feed')}
+                onStartTimer={(book) => handleSelectBookForTimer(book.title, book.author, book.coverImageUrl)}
+                onAdjustGoal={handleAdjustGoal}
+                onOpenAuthModal={(t) => openAuthModal(t)}
               />
             )}
           </div>

@@ -19,7 +19,7 @@ import { useNoticeStore } from '../../stores/noticeStore';
 import { getUserAvatar } from '../../utils/avatar';
 import { VibeTriggerButton } from '../theme/VibeTriggerButton';
 
-export type NavigationTab = 'feed' | 'explore' | 'timer' | 'analytics' | 'sanctuary' | 'leaderboard' | 'bookshelf' | 'saved' | 'book_details' | 'reader';
+export type NavigationTab = 'feed' | 'explore' | 'timer' | 'analytics' | 'sanctuary' | 'leaderboard' | 'bookshelf' | 'saved' | 'book_details' | 'reader' | 'profile';
 
 interface SidebarLeftProps {
   activeTab: NavigationTab;
@@ -131,12 +131,16 @@ export const SidebarLeft: React.FC<SidebarLeftProps> = ({ activeTab, onTabChange
 
         {/* Profile Card */}
         <div
-          onClick={onGoToLogin}
+          onClick={() => onTabChange('profile')}
           role="button"
           tabIndex={0}
-          title="Account settings"
-          className="flex items-center justify-center lg:justify-between px-3 py-2.5 rounded-xl hover:bg-vibe-card-subtle transition-colors cursor-pointer group select-none"
-          onKeyDown={(e) => e.key === 'Enter' && onGoToLogin?.()}
+          title="Reader profile & settings"
+          className={`flex items-center justify-center lg:justify-between px-3 py-2.5 rounded-xl transition-colors cursor-pointer group select-none ${
+            activeTab === 'profile'
+              ? 'bg-vibe-card-subtle ring-1 ring-vibe-border shadow-xs'
+              : 'hover:bg-vibe-card-subtle'
+          }`}
+          onKeyDown={(e) => e.key === 'Enter' && onTabChange('profile')}
         >
           <div className="flex items-center gap-3 min-w-0">
             <img

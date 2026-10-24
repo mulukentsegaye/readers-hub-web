@@ -246,4 +246,26 @@ export const postsService = {
       },
     };
   },
+
+  /**
+   * Delete a post authored by the user from Supabase
+   */
+  async deletePost(postId: string, userId: string): Promise<boolean> {
+    if (!isSupabaseConfigured()) {
+      return true;
+    }
+
+    const { error } = await supabase
+      .from('posts')
+      .delete()
+      .eq('id', postId)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.warn('Failed to delete post from Supabase:', error.message);
+      throw error;
+    }
+
+    return true;
+  },
 };

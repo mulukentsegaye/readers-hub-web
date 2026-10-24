@@ -143,6 +143,7 @@ export interface BookDetailsData {
   subjects?: string[];
   pageCount?: number;
   ratingAverage?: number;
+  telegramMessageId?: number | string;
 }
 
 export interface BookSummaryData {

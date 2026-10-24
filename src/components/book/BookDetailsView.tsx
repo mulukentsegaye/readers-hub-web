@@ -13,7 +13,9 @@ import {
   Loader2, 
   Plus, 
   ChevronDown,
-  Trash2
+  Trash2,
+  Send,
+  ExternalLink
 } from 'lucide-react';
 import { BookDetailsData, BookSummaryData } from '../../types';
 import { aiSummaryService } from '../../services/aiSummaryService';
@@ -31,6 +33,12 @@ interface BookDetailsViewProps {
   onShareBook: (book: { title: string; author: string; coverImageUrl?: string }) => void;
   onViewBookDetails?: (title: string, author: string, cover?: string) => void;
 }
+
+const TELEGRAM_BOT_USERNAME = (
+  import.meta.env.VITE_TELEGRAM_BOT_USERNAME ||
+  (import.meta as any).env?.NEXT_PUBLIC_TELEGRAM_BOT_USERNAME ||
+  'LiReadBot'
+).trim().replace(/^@/, '');
 
 
 function renderFormattedInline(text: string): React.ReactNode {
@@ -144,11 +152,20 @@ export const BookDetailsView: React.FC<BookDetailsViewProps> = ({
   onViewBookDetails,
 }) => {
   const { user, isGuest, openAuthModal, refreshProfile } = useAuthStore();
+
   const [isUpdatingShelf, setIsUpdatingShelf] = useState(false);
   const { showAlertModal } = useNoticeStore();
   const { posts } = useFeedStore();
 
   const [detailedBook, setDetailedBook] = useState<BookDetailsData>(book);
+
+  const telegramLink = (() => {
+    if (!TELEGRAM_BOT_USERNAME) return null;
+    if (detailedBook.telegramMessageId) {
+      return `https://t.me/${TELEGRAM_BOT_USERNAME}?start=${detailedBook.telegramMessageId}`;
+    }
+    return `https://t.me/${TELEGRAM_BOT_USERNAME}`;
+  })();
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
 
   // Check bookshelf status on mount or when book / user changes
@@ -217,8 +234,9 @@ export const BookDetailsView: React.FC<BookDetailsViewProps> = ({
     setDetailedBook({
       ...book,
       coverImageUrl: sanitizeOpenLibraryCover(book.title, book.author, book.coverImageUrl),
+      telegramMessageId: book.telegramMessageId,
     });
-  }, [book.title, book.author, book.coverImageUrl, book.description]);
+  }, [book.title, book.author, book.coverImageUrl, book.description, book.telegramMessageId]);
 
   // Fetch deeper book details from Open Library if description is missing
   useEffect(() => {
@@ -240,6 +258,7 @@ export const BookDetailsView: React.FC<BookDetailsViewProps> = ({
               subjects: fullData.subjects || (book.subjects && book.subjects.length > 0 ? book.subjects : ['Literature', 'Philosophy', 'Focus']),
               firstPublishYear: fullData.firstPublishYear || book.firstPublishYear,
               coverImageUrl: sanitizeOpenLibraryCover(book.title, book.author, book.coverImageUrl || fullData.coverImageUrl),
+              telegramMessageId: fullData.telegramMessageId || book.telegramMessageId,
             });
           }
         } catch (err) {
@@ -554,6 +573,45 @@ export const BookDetailsView: React.FC<BookDetailsViewProps> = ({
 
             </div>
 
+            {/* Telegram Instant PDF Delivery Action */}
+            <div className="pt-2">
+              {telegramLink ? (
+                <a
+                  href={telegramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[46px] px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold bg-[#229ED9] hover:bg-[#1f8ec4] active:bg-[#1b7db0] text-white shadow-sm hover:shadow-md transition-all active:scale-[0.99] flex items-center justify-between gap-3 group border border-sky-400/30"
+                  title={detailedBook.telegramMessageId ? `Get "${detailedBook.title}" PDF instantly via Telegram` : "Open LiRead Telegram Bot"}
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <Send className="w-3.5 h-3.5 fill-white text-white rotate-[-15deg]" />
+                    </div>
+                    <span className="font-medium tracking-tight truncate">📥 Get PDF on Telegram</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium bg-white/20 hover:bg-white/30 px-2.5 py-1 rounded-full transition-colors flex-shrink-0">
+                    <span>{detailedBook.telegramMessageId ? 'Instant PDF' : 'Via Bot'}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </span>
+                </a>
+              ) : (
+                <div
+                  className="w-full min-h-[46px] px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium bg-vibe-card-subtle border border-vibe-border text-vibe-ink-muted flex items-center justify-between gap-3 opacity-70"
+                  title="Telegram bot is not yet configured"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-7 h-7 rounded-lg bg-vibe-card flex items-center justify-center flex-shrink-0">
+                      <Send className="w-3.5 h-3.5 text-vibe-ink-muted" />
+                    </div>
+                    <span className="truncate">📥 Get PDF on Telegram</span>
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider bg-vibe-card px-2 py-0.5 rounded-full border border-vibe-border">
+                    Available Soon
+                  </span>
+                </div>
+              )}
+            </div>
+
           </div>
 
         </div>
@@ -769,6 +827,18 @@ export const BookDetailsView: React.FC<BookDetailsViewProps> = ({
                     <Clock className="w-4 h-4" />
                     <span>Launch Reading Timer with {detailedBook.title}</span>
                   </button>
+
+                  {telegramLink && (
+                    <a
+                      href={telegramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-[#229ED9] hover:bg-[#1f8ec4] text-white shadow-md transition-all active:scale-95"
+                    >
+                      <Send className="w-4 h-4 fill-white" />
+                      <span>📥 Get PDF on Telegram</span>
+                    </a>
+                  )}
                 </div>
               </div>
 

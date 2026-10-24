@@ -345,6 +345,7 @@ export const App: React.FC = () => {
     firstPublishYear?: number;
     workKey?: string;
     description?: string;
+    telegramMessageId?: number | string;
   }) => {
     setPreviousTab(activeTab === 'book_details' ? 'feed' : activeTab);
     setSelectedBookDetails({
@@ -354,6 +355,7 @@ export const App: React.FC = () => {
       firstPublishYear: book.firstPublishYear,
       workKey: book.workKey,
       description: book.description,
+      telegramMessageId: book.telegramMessageId,
     });
     setActiveTab('book_details');
     const mainEl = document.getElementById('main-viewport');

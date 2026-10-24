@@ -10,6 +10,7 @@ export interface SuggestedBook {
   firstPublishYear?: number;
   coverId?: number;
   workKey?: string;
+  telegramMessageId?: number | string;
 }
 
 export interface SearchBooksResult {
@@ -250,6 +251,7 @@ export const bookSearchService = {
           coverThumbnailUrl: b.coverImageUrl,
           firstPublishYear: b.firstPublishYear,
           workKey: b.workKey,
+          telegramMessageId: b.telegramMessageId,
         });
       }
     }
@@ -415,6 +417,7 @@ export const bookSearchService = {
         description: curatedMatch.description || curatedMatch.tagline,
         subjects: [curatedMatch.categoryLabel, 'Literature', 'Essential Read'],
         ratingAverage: curatedMatch.ratingAverage,
+        telegramMessageId: curatedMatch.telegramMessageId,
       };
     }
 

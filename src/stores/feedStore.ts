@@ -22,6 +22,7 @@ interface FeedStore {
   toggleUpvote: (postId: string, currentUserId?: string) => Promise<void>;
   toggleSave: (postId: string, currentUserId?: string) => Promise<void>;
   addPost: (postData: Partial<Post>, currentUserId?: string) => Promise<void>;
+  deletePost: (postId: string, currentUserId?: string) => Promise<void>;
 }
 
 export const useFeedStore = create<FeedStore>()(
@@ -162,6 +163,24 @@ export const useFeedStore = create<FeedStore>()(
           // Remove temp post on failure to avoid phantom data
           set((state) => ({ posts: state.posts.filter((p) => p.id !== tempId) }));
           toast.error('Could not publish your post. Please check your connection and try again.', 'Publish Failed');
+        }
+      },
+
+      deletePost: async (postId: string, currentUserId?: string) => {
+        // Optimistic UI update
+        set((state) => ({ posts: state.posts.filter((p) => p.id !== postId) }));
+        if (currentUserId && isSupabaseConfigured() && !postId.startsWith('demo-post-')) {
+          try {
+            await postsService.deletePost(postId, currentUserId);
+            toast.success('Your post has been removed from the feed.', 'Post Deleted');
+          } catch (err) {
+            console.warn('Failed to delete post in Supabase:', err);
+            // Re-fetch to recover state if server failed
+            get().fetchPosts(currentUserId);
+            toast.error('Could not delete post. Please verify your permissions.', 'Delete Failed');
+          }
+        } else {
+          toast.success('Post removed from feed.', 'Post Removed');
         }
       },
     }),

@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
-import { Heart, MessageSquare, Bookmark, MoreHorizontal, Star, BookOpen } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { 
+  Heart, 
+  MessageSquare, 
+  Bookmark, 
+  MoreHorizontal, 
+  Star, 
+  BookOpen, 
+  Copy, 
+  Check, 
+  Timer, 
+  Share2, 
+  Trash2 
+} from 'lucide-react';
 import { Post } from '../../types';
 import { useFeedStore } from '../../stores/feedStore';
 import { useAuthStore } from '../../stores/authStore';
-import { toast } from '../../stores/noticeStore';
+import { useNoticeStore, toast } from '../../stores/noticeStore';
 import { AnimatedCounter } from '../ui/AnimatedCounter';
 
 interface PostCardProps {
@@ -38,12 +50,40 @@ function bookCoverAccent(title: string): string {
 }
 
 export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, onViewBookDetails }) => {
-  const { toggleUpvote, toggleSave } = useFeedStore();
+  const { toggleUpvote, toggleSave, deletePost } = useFeedStore();
   const { user } = useAuthStore();
   const [isBouncing, setIsBouncing] = useState(false);
   const [showPlusOne, setShowPlusOne] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hasCopied, setHasCopied] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const coverBg = bookCoverColor(post.bookTitle);
   const coverAccent = bookCoverAccent(post.bookTitle);
+
+  // Close dropdown on outside click or Escape key
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current && 
+        !menuRef.current.contains(e.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMenuOpen(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMenuOpen]);
 
   const handleUpvote = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -57,8 +97,86 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, 
     toggleUpvote(post.id, user?.id);
   };
 
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const citation = `"${post.quoteText || post.bookTitle}"\n— ${post.bookTitle} by ${post.bookAuthor}${post.pageNumber ? ` (p. ${post.pageNumber})` : ''}`;
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(citation);
+      setHasCopied(true);
+      setTimeout(() => setHasCopied(false), 2000);
+      toast.success(`Copied passage from "${post.bookTitle}" to clipboard.`, 'Copied to Clipboard');
+    } else {
+      toast.info(citation, 'Passage');
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleStartTimer = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMenuOpen(false);
+    if (onSelectBookForTimer) {
+      onSelectBookForTimer(post.bookTitle, post.bookAuthor, post.coverImageUrl);
+      toast.success(`Loaded "${post.bookTitle}" into your reading timer session.`, 'Timer Ready');
+    }
+  };
+
+  const handleViewBookDetails = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMenuOpen(false);
+    if (onViewBookDetails) {
+      onViewBookDetails(post.bookTitle, post.bookAuthor, post.coverImageUrl);
+    }
+  };
+
+  const handleToggleBookmark = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMenuOpen(false);
+    toggleSave(post.id, user?.id);
+  };
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMenuOpen(false);
+    const textToShare = `"${post.quoteText || post.bookTitle}" — ${post.bookTitle} by ${post.bookAuthor}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Passage from ${post.bookTitle}`,
+          text: textToShare,
+          url: window.location.href,
+        });
+        return;
+      } catch {
+        // Ignored if user dismissed native share sheet
+      }
+    }
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(`${textToShare}\n${window.location.href}`);
+      toast.success('Passage and app link copied to clipboard.', 'Share Ready');
+    }
+  };
+
+  const isOwnPost = Boolean(
+    user?.id && (user.id === post.userId || post.authorName === user.fullName)
+  );
+
+  const handleDeletePost = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMenuOpen(false);
+    useNoticeStore.getState().showAlertModal({
+      type: 'warning',
+      title: 'Delete this passage?',
+      message: `Are you sure you want to remove your shared note for "${post.bookTitle}"? This cannot be undone.`,
+      confirmLabel: 'Delete',
+      cancelLabel: 'Keep',
+      onConfirm: () => {
+        deletePost(post.id, user?.id);
+      },
+    });
+  };
+
   return (
-    <article className="bg-vibe-card border border-vibe-border rounded-2xl overflow-hidden shadow-soft hover:shadow-float transition-shadow duration-200 group">
+    <article className="bg-vibe-card border border-vibe-border rounded-2xl relative shadow-soft hover:shadow-float transition-shadow duration-200 group">
 
       {/* Author header */}
       <div className="flex items-center justify-between px-5 pt-4 pb-0">
@@ -82,23 +200,131 @@ export const PostCard: React.FC<PostCardProps> = ({ post, onSelectBookForTimer, 
           </div>
         </div>
 
-        <button
-          type="button"
-          aria-label="More options"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (navigator?.clipboard?.writeText) {
-              navigator.clipboard.writeText(`"${post.quoteText}" — ${post.bookTitle} (${post.bookAuthor})`);
-              toast.success(`Copied passage from "${post.bookTitle}" to clipboard.`, 'Copied to Clipboard');
-            } else {
-              toast.info(`"${post.bookTitle}" by ${post.bookAuthor}`, 'Reading');
-            }
-          }}
-          title="Copy passage to clipboard"
-          className="w-8 h-8 flex items-center justify-center rounded-xl text-vibe-ink-muted hover:text-vibe-ink hover:bg-vibe-card-subtle transition-colors flex-shrink-0 ml-2"
-        >
-          <MoreHorizontal className="w-4 h-4" strokeWidth={1.75} />
-        </button>
+        {/* Three dots overflow menu with Copy and contextual passage actions */}
+        <div className="relative flex-shrink-0 ml-2">
+          <button
+            ref={buttonRef}
+            type="button"
+            aria-label="Passage options"
+            aria-expanded={isMenuOpen}
+            aria-haspopup="menu"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsMenuOpen((prev) => !prev);
+            }}
+            title="More options"
+            className={`w-8 h-8 flex items-center justify-center rounded-xl transition-colors cursor-pointer ${
+              isMenuOpen
+                ? 'bg-vibe-card-subtle text-vibe-ink'
+                : 'text-vibe-ink-muted hover:text-vibe-ink hover:bg-vibe-card-subtle'
+            }`}
+          >
+            <MoreHorizontal className="w-4 h-4" strokeWidth={1.75} />
+          </button>
+
+          {/* Floating Dropdown Options Menu */}
+          {isMenuOpen && (
+            <div
+              ref={menuRef}
+              role="menu"
+              aria-label="Passage options menu"
+              onClick={(e) => e.stopPropagation()}
+              className="absolute right-0 top-full mt-1.5 w-56 rounded-2xl bg-vibe-card border border-vibe-border shadow-elevated p-1.5 z-40 animate-in fade-in zoom-in-95 duration-150 select-none text-left"
+            >
+              <div className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-vibe-ink-muted">
+                Passage Options
+              </div>
+
+              {/* 1. Copy Passage */}
+              <button
+                type="button"
+                role="menuitem"
+                onClick={handleCopy}
+                className="w-full px-3 py-2 text-xs font-medium rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center justify-between text-vibe-ink cursor-pointer group/item"
+              >
+                <div className="flex items-center gap-2.5 min-w-0">
+                  {hasCopied ? (
+                    <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
+                  ) : (
+                    <Copy className="w-4 h-4 text-vibe-ink-muted group-hover/item:text-vibe-ink flex-shrink-0" />
+                  )}
+                  <span className="truncate">{hasCopied ? 'Copied to Clipboard!' : 'Copy Passage'}</span>
+                </div>
+                <span className="text-[10px] font-mono text-vibe-ink-muted ml-2">⌘C</span>
+              </button>
+
+              {/* 2. Read with Timer */}
+              {onSelectBookForTimer && (
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={handleStartTimer}
+                  className="w-full px-3 py-2 text-xs font-medium rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center gap-2.5 text-vibe-ink cursor-pointer group/item"
+                >
+                  <Timer className="w-4 h-4 text-vibe-ink-muted group-hover/item:text-vibe-accent flex-shrink-0" />
+                  <span className="truncate">Read with Timer</span>
+                </button>
+              )}
+
+              {/* 3. View Book Details */}
+              {onViewBookDetails && (
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={handleViewBookDetails}
+                  className="w-full px-3 py-2 text-xs font-medium rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center gap-2.5 text-vibe-ink cursor-pointer group/item"
+                >
+                  <BookOpen className="w-4 h-4 text-vibe-ink-muted group-hover/item:text-vibe-accent flex-shrink-0" />
+                  <span className="truncate">View Book Details</span>
+                </button>
+              )}
+
+              {/* 4. Bookmark / Save to Sanctuary */}
+              <button
+                type="button"
+                role="menuitem"
+                onClick={handleToggleBookmark}
+                className="w-full px-3 py-2 text-xs font-medium rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center gap-2.5 text-vibe-ink cursor-pointer group/item"
+              >
+                <Bookmark
+                  className={`w-4 h-4 flex-shrink-0 ${
+                    post.isSaved
+                      ? 'fill-vibe-accent text-vibe-accent'
+                      : 'text-vibe-ink-muted group-hover/item:text-vibe-ink'
+                  }`}
+                />
+                <span className="truncate">{post.isSaved ? 'Remove from Saved' : 'Save to Sanctuary'}</span>
+              </button>
+
+              {/* 5. Share Passage */}
+              <button
+                type="button"
+                role="menuitem"
+                onClick={handleShare}
+                className="w-full px-3 py-2 text-xs font-medium rounded-xl hover:bg-vibe-card-subtle transition-colors flex items-center gap-2.5 text-vibe-ink cursor-pointer group/item"
+              >
+                <Share2 className="w-4 h-4 text-vibe-ink-muted group-hover/item:text-vibe-ink flex-shrink-0" />
+                <span className="truncate">Share Passage</span>
+              </button>
+
+              {/* 6. Delete Post (if author) */}
+              {isOwnPost && (
+                <>
+                  <div className="my-1 border-t border-vibe-border-subtle" />
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={handleDeletePost}
+                    className="w-full px-3 py-2 text-xs font-medium rounded-xl hover:bg-rose-50 dark:hover:bg-rose-500/10 text-rose-600 dark:text-rose-400 transition-colors flex items-center gap-2.5 cursor-pointer"
+                  >
+                    <Trash2 className="w-4 h-4 flex-shrink-0" />
+                    <span className="truncate">Delete Passage</span>
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Book + Quote block */}

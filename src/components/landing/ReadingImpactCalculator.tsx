@@ -1,3 +1,4 @@
+import { ScrollRevealCard } from './ScrollRevealCard';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   BookOpen, 
@@ -141,7 +142,8 @@ export const ReadingImpactCalculator: React.FC<ReadingImpactCalculatorProps> = (
         </div>
 
         {/* Main Interactive Calculator Card */}
-        <div className="rounded-3xl bg-vibe-card border border-vibe-border shadow-xl p-6 sm:p-10 lg:p-12 space-y-8 backdrop-blur-sm">
+        <ScrollRevealCard delayMs={60}>
+          <div className="rounded-3xl bg-vibe-card border border-vibe-border shadow-xl p-6 sm:p-10 lg:p-12 space-y-8 backdrop-blur-sm">
           
           {/* Header row: Slider prompt + current value badge */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-vibe-border">
@@ -338,6 +340,7 @@ export const ReadingImpactCalculator: React.FC<ReadingImpactCalculatorProps> = (
           </p>
 
         </div>
+        </ScrollRevealCard>
 
       </div>
     </section>

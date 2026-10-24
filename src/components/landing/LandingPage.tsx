@@ -26,6 +26,7 @@ import { useAmbientAudioStore } from '../../stores/ambientAudioStore';
 import { AmbientSoundId } from '../../types/theme';
 import { useAuthStore } from '../../stores/authStore';
 import { ReadingImpactCalculator } from './ReadingImpactCalculator';
+import { ScrollRevealCard } from './ScrollRevealCard';
 
 interface LandingPageProps {
   onEnterApp: () => void;
@@ -222,14 +223,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
           3. CORE PRODUCT ARCHITECTURE: INTRO BANNER
           ============================================================================== */}
       <section id="features" className="w-full pt-16 sm:pt-24 pb-4 px-4 sm:px-6 lg:px-12 border-t border-vibe-border">
-        <div className="max-w-3xl mx-auto text-center space-y-3">
+        <ScrollRevealCard delayMs={40} className="max-w-3xl mx-auto text-center space-y-3">
           <h2 className="text-2xl sm:text-4xl font-display font-normal text-vibe-ink tracking-tight">
             Everything You Need to Read More Deeply
           </h2>
           <p className="text-xs sm:text-sm text-vibe-ink-secondary leading-relaxed max-w-xl mx-auto">
             No distracting ads, no infinite dopamine doom-scrolling. Just pure focus, literary connection, and timeless tools.
           </p>
-        </div>
+        </ScrollRevealCard>
       </section>
 
       {/* ==============================================================================
@@ -286,7 +287,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
 
             {/* Right: Interactive Timer Visual Mockup */}
             <div className="lg:col-span-6">
-              <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 sm:p-8 shadow-lg space-y-6 relative overflow-hidden">
+              <ScrollRevealCard delayMs={80}>
+                <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 sm:p-8 shadow-lg space-y-6 relative overflow-hidden">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -344,6 +346,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
                   </span>
                 </div>
               </div>
+              </ScrollRevealCard>
             </div>
 
           </div>
@@ -359,7 +362,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
 
             {/* Left: Interactive Soundscape Player Lounge */}
             <div className="lg:col-span-6 order-2 lg:order-1">
-              <div className="p-6 sm:p-8 rounded-3xl bg-vibe-card border border-vibe-border shadow-lg space-y-6">
+              <ScrollRevealCard delayMs={80}>
+                <div className="p-6 sm:p-8 rounded-3xl bg-vibe-card border border-vibe-border shadow-lg space-y-6">
                 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -451,6 +455,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
                   </p>
                 )}
               </div>
+              </ScrollRevealCard>
             </div>
 
             {/* Right: Text & Editorial Details */}
@@ -534,7 +539,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
             <div className="lg:col-span-6 space-y-4">
               
               {/* Card 1: Bookshelf Queue Preview */}
-              <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 shadow-md space-y-4">
+              <ScrollRevealCard delayMs={60}>
+                <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 shadow-md space-y-4">
                 <div className="flex items-center justify-between pb-2 border-b border-vibe-border">
                   <div className="flex items-center gap-2">
                     <Library className="w-4 h-4 text-vibe-accent" />
@@ -582,8 +588,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
                 </div>
               </div>
 
+              </ScrollRevealCard>
+
               {/* Card 2: Saved Literary Passage Preview */}
-              <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 shadow-md space-y-3 relative overflow-hidden">
+              <ScrollRevealCard delayMs={160}>
+                <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 shadow-md space-y-3 relative overflow-hidden">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-vibe-accent">
                     <Quote className="w-4 h-4" />
@@ -604,6 +613,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
                   <span className="font-mono">Page 84</span>
                 </div>
               </div>
+              </ScrollRevealCard>
 
             </div>
 
@@ -620,7 +630,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
 
             {/* Left: Visual Analytics Mockup */}
             <div className="lg:col-span-6 order-2 lg:order-1">
-              <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 sm:p-8 shadow-lg space-y-6">
+              <ScrollRevealCard delayMs={80}>
+                <div className="rounded-3xl bg-vibe-card border border-vibe-border p-6 sm:p-8 shadow-lg space-y-6">
                 
                 {/* Metric Summary Pills */}
                 <div className="grid grid-cols-2 gap-3">
@@ -709,6 +720,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
                 </div>
 
               </div>
+              </ScrollRevealCard>
             </div>
 
             {/* Right: Text & Editorial Details */}
@@ -760,7 +772,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
           5. PHILOSOPHY & LITERARY QUOTES
           ============================================================================== */}
       <section id="quotes" className="w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 border-t border-vibe-border">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+        <ScrollRevealCard delayMs={80} className="max-w-4xl mx-auto text-center space-y-8">
           
           <div className="w-10 h-10 rounded-full bg-vibe-accent-subtle text-vibe-accent mx-auto flex items-center justify-center">
             <Feather className="w-5 h-5" />
@@ -775,14 +787,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
             <p className="text-xs text-vibe-ink-muted">French Author & Dramatist</p>
           </div>
 
-        </div>
+        </ScrollRevealCard>
       </section>
 
       {/* ==============================================================================
           7. FINAL HIGH-IMPACT CALL TO ACTION
           ============================================================================== */}
       <section className="w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 border-t border-vibe-border relative overflow-hidden">
-        <div className="max-w-3xl mx-auto rounded-3xl border border-vibe-border bg-vibe-card p-8 sm:p-14 text-center shadow-xl space-y-6">
+        <ScrollRevealCard delayMs={80} className="max-w-3xl mx-auto">
+          <div className="rounded-3xl border border-vibe-border bg-vibe-card p-8 sm:p-14 text-center shadow-xl space-y-6">
 
           <h2 className="text-2xl sm:text-4xl font-display font-normal text-vibe-ink tracking-tight">
             Reclaim your attention. <br />
@@ -817,6 +830,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterApp, onOpenTime
             No credit card required · Zero algorithms · Immediate access
           </p>
         </div>
+        </ScrollRevealCard>
 
       </section>
 

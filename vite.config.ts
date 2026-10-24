@@ -10,10 +10,12 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       'epubjs': path.resolve(__dirname, './node_modules/epubjs/dist/epub.js'),
+      'JSZip': path.resolve(__dirname, './node_modules/jszip/dist/jszip.min.js'),
+      'jszip': path.resolve(__dirname, './node_modules/jszip/dist/jszip.min.js'),
     },
   },
   optimizeDeps: {
-    include: ['epubjs'],
+    include: ['epubjs', 'jszip'],
   },
   server: {
     port: 3000,
